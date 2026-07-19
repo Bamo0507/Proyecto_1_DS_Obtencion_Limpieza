@@ -44,6 +44,15 @@ def main():
         check=True,
     )
 
+    # Navegador para la extraccion (Playwright). Descarga el chromium que
+    # corresponde a la version de playwright instalada, asi el entorno queda
+    # reproducible sin depender de un navegador del sistema.
+    print("[instalando] navegador chromium para playwright")
+    subprocess.run(
+        [str(python_del_venv()), "-m", "playwright", "install", "chromium"],
+        check=True,
+    )
+
     print()
     print("[ok]         entorno listo. Ahora activa el venv y corre el pipeline:")
     if sys.platform == "win32":

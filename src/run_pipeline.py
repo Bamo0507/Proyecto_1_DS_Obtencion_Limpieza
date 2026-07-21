@@ -24,7 +24,8 @@ ETAPAS = [
     "06_plan.py",
     "07_departamental.py",
     "08_columnas.py",
-    "09_final.py",
+    "09_renombrar.py",
+    "10_final.py",
 ]
 
 

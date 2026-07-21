@@ -66,6 +66,11 @@ DEPARTAMENTOS = [
 ]
 
 
+# Catalogo oficial de ubicaciones (departamento -> municipios), cosechado de los
+# dropdowns del buscador; sirve de referencia para las pruebas de validacion.
+RUTA_CATALOGO = DIR_RAW / "catalogo_ubicaciones.csv"  # <- extraer_catalogo.py
+
+
 def ruta_raw_departamento(codigo, slug):
     """Ruta del CSV crudo de un departamento: data/raw/diversificado_NN_slug.csv"""
     return DIR_RAW / f"diversificado_{codigo}_{slug}.csv"
@@ -106,7 +111,8 @@ RUTA_DISTRITO = DIR_PROCESSED / "05_distrito.csv"  # <- 05_distrito.py
 RUTA_PLAN = DIR_PROCESSED / "06_plan.csv"  # <- 06_plan.py
 RUTA_DEPARTAMENTAL = DIR_PROCESSED / "07_departamental.csv"  # <- 07_departamental.py
 RUTA_COLUMNAS = DIR_PROCESSED / "08_columnas.csv"  # <- 08_columnas.py
-RUTA_FINAL = DIR_PROCESSED / "establecimientos_diversificado_limpio.csv"  # <- 09_final.py
+RUTA_RENOMBRADO = DIR_PROCESSED / "09_renombrado.csv"  # <- 09_renombrar.py
+RUTA_FINAL = DIR_PROCESSED / "establecimientos_diversificado_limpio.csv"  # <- 10_final.py
 
 # --- Constantes de dominio para la limpieza --------------------------------
 
@@ -148,3 +154,25 @@ MAPA_PLAN = {
     "INTERCALADO": "MIXTO",
 }
 CATEGORIAS_PLAN = ["ENTRE SEMANA", "FIN DE SEMANA", "A DISTANCIA", "MIXTO"]
+
+# 09_renombrar: nombres descriptivos en minusculas para el dataset final.
+# DEPARTAMENTAL pasa a direccion_departamental para no confundirla con DEPARTAMENTO.
+RENOMBRES = {
+    "CODIGO": "codigo",
+    "DISTRITO": "distrito",
+    "DEPARTAMENTO": "departamento",
+    "MUNICIPIO": "municipio",
+    "ESTABLECIMIENTO": "establecimiento",
+    "DIRECCION": "direccion",
+    "TELEFONO": "telefono",
+    "SUPERVISOR": "supervisor",
+    "DIRECTOR": "director",
+    "SECTOR": "sector",
+    "AREA": "area",
+    "STATUS": "status",
+    "MODALIDAD": "modalidad",
+    "JORNADA": "jornada",
+    "PLAN": "plan",
+    "DEPARTAMENTAL": "direccion_departamental",
+}
+COLUMNAS_FINALES = list(RENOMBRES.values())

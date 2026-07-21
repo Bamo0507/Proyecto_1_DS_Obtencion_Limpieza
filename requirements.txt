@@ -3,3 +3,4 @@ numpy
 playwright
 jupyterlab
 matplotlib
+pytest

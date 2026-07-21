@@ -15,10 +15,16 @@ from pathlib import Path
 DIR_SRC = Path(__file__).resolve().parent
 
 # Etapas en orden de ejecucion. Cada una lee la salida de la anterior.
-# TODO: llenar cuando definamos las etapas del pipeline.
 ETAPAS = [
-    # "01_ingesta.py",
-    # "02_...py",
+    "01_ingesta.py",
+    "02_nulos.py",
+    "03_nombres.py",
+    "04_telefono.py",
+    "05_distrito.py",
+    "06_plan.py",
+    "07_departamental.py",
+    "08_columnas.py",
+    "09_final.py",
 ]
 
 
@@ -33,6 +39,7 @@ def main():
         print("#" * 60)
         print(f"# Corriendo {etapa}")
         print("#" * 60)
+        sys.stdout.flush()  # asegura que el banner salga antes de la salida de la etapa
         resultado = subprocess.run([sys.executable, str(ruta)])
         if resultado.returncode != 0:
             print()

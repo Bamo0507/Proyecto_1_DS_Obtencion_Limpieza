@@ -97,6 +97,54 @@ COLUMNAS_CRUDAS = [
 # ==========================================================================
 # LIMPIEZA (run_pipeline.py) — rutas por etapa
 # ==========================================================================
-# TODO: definir cuando lleguen las instrucciones de limpieza. Ejemplo:
-# RUTA_INGESTA = DIR_PROCESSED / "01_ingesta.csv"     # <- 01_ingesta.py
-# RUTA_FINAL   = DIR_PROCESSED / "establecimientos_diversificado_limpio.csv"
+# --- Rutas por etapa (cada una la produce el script indicado) --------------
+RUTA_INGESTA = DIR_PROCESSED / "01_ingesta.csv"  # <- 01_ingesta.py
+RUTA_NULOS = DIR_PROCESSED / "02_nulos.csv"  # <- 02_nulos.py
+RUTA_NOMBRES = DIR_PROCESSED / "03_nombres.csv"  # <- 03_nombres.py
+RUTA_TELEFONO = DIR_PROCESSED / "04_telefono.csv"  # <- 04_telefono.py
+RUTA_DISTRITO = DIR_PROCESSED / "05_distrito.csv"  # <- 05_distrito.py
+RUTA_PLAN = DIR_PROCESSED / "06_plan.csv"  # <- 06_plan.py
+RUTA_DEPARTAMENTAL = DIR_PROCESSED / "07_departamental.csv"  # <- 07_departamental.py
+RUTA_COLUMNAS = DIR_PROCESSED / "08_columnas.csv"  # <- 08_columnas.py
+RUTA_FINAL = DIR_PROCESSED / "establecimientos_diversificado_limpio.csv"  # <- 09_final.py
+
+# --- Constantes de dominio para la limpieza --------------------------------
+
+PATRON_CODIGO = r"^\d{2}-\d{2}-\d{4}-\d{2}$"
+
+# 02_nulos: marcadores de no-dato disfrazados, por columna (se unifican a NaN).
+# No se incluye JORNADA: SIN JORNADA es un valor legitimo (planes a distancia).
+MARCADORES_NULOS = {
+    "DIRECTOR": ["SIN DATO", "-", ".", "0", "000000", "0000000"],
+    "DIRECCION": ["."],
+    "AREA": ["SIN ESPECIFICAR"],
+}
+PATRON_CEROS = r"0+"  # DIRECTOR: cualquier cadena de solo ceros tambien es no-dato
+
+# 03_nombres: prefijo del nombre generico para ESTABLECIMIENTO sin dato.
+PREFIJO_SIN_NOMBRE = "SIN NOMBRE - "
+
+# 04_telefono: separadores que dividen numeros distintos o formato en una celda.
+SEPARADORES_TELEFONO = r"[\s,;/yY-]+"
+
+# 05_distrito: formatos validos; lo que no calce (truncados) se vuelve NaN.
+PATRON_DISTRITO_LARGO = r"^\d{2}-\d{2}-\d{4}$"
+PATRON_DISTRITO_CORTO = r"^\d{2}-\d{3}$"
+
+# 06_plan: mapa de las 13 categorias originales a las 4 finales.
+MAPA_PLAN = {
+    "DIARIO(REGULAR)": "ENTRE SEMANA",
+    "SEMIPRESENCIAL (UN DÍA A LA SEMANA)": "ENTRE SEMANA",
+    "SEMIPRESENCIAL (DOS DÍAS A LA SEMANA)": "ENTRE SEMANA",
+    "SEMIPRESENCIAL": "ENTRE SEMANA",
+    "FIN DE SEMANA": "FIN DE SEMANA",
+    "SEMIPRESENCIAL (FIN DE SEMANA)": "FIN DE SEMANA",
+    "SABATINO": "FIN DE SEMANA",
+    "DOMINICAL": "FIN DE SEMANA",
+    "A DISTANCIA": "A DISTANCIA",
+    "VIRTUAL A DISTANCIA": "A DISTANCIA",
+    "MIXTO": "MIXTO",
+    "IRREGULAR": "MIXTO",
+    "INTERCALADO": "MIXTO",
+}
+CATEGORIAS_PLAN = ["ENTRE SEMANA", "FIN DE SEMANA", "A DISTANCIA", "MIXTO"]

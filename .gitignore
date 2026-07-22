@@ -4,13 +4,6 @@
 venv/
 env/
 
-# --- Datos generados por el pipeline ---------------------------------------
-# Reproducibles corriendo el pipeline desde data/raw/. NO se versionan.
-# (data/raw/ SI se versiona: es la fuente de verdad.)
-**/data/processed/
-**/data/interim/
-**/data/tmp/
-
 # --- Cache de Python -------------------------------------------------------
 __pycache__/
 *.pyc
